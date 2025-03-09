@@ -69,15 +69,23 @@ class Solution:
         '8': 'tuv',
         '9': 'wxyz'
     }
-
+    
     def letterCombinations(self, digits: str) -> List[str]:
-        letters = ''
-        for digit in digits:
-            letters += self.DIGIT_LETTERS[digit]
-        return [''.join(c) for c in list(combinations(letters, len(digits)))]
+        combinations = []
+        
+        def backtracking(index, path=[]):
+            if index == len(digits):
+                combinations.append(''.join(path))
+                return
+            for letter in self.DIGIT_LETTERS[digits[index]]:
+                backtracking(index + 1, path + [letter])
+        
+        if not digits:
+            return []
+        
+        backtracking(0)
+        return combinations
             
-        
-
-        
+print(Solution().letterCombinations('23'))
 # @lc code=end
 
